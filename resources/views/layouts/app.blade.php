@@ -18,6 +18,18 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <link href="{{asset('frontEnd/css/css')}}" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="{{asset('frontEnd/css/bootstrap.min.css')}}">
+
+    <link rel="stylesheet" href="{{asset('frontEnd/css/font-awesome.min.css')}}">
+
+    <link type="text/css" rel="stylesheet" href="{{asset('frontEnd/css/style.css')}}">
+
+    @yield('css')
+
+
 </head>
 <body>
     <div id="app">

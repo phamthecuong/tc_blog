@@ -11,16 +11,31 @@ use PHPUnit\Framework\ExpectationFailedException;
 
 class PostController extends Controller
 {
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+
     public function index()
     {
-        $post = Posts::with('user')->get();
+        $post = Posts::with('user')->paginate(10);
         return view('backend.posts.index', compact('post'));
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
 
     public function getStore()
     {
         return view('backend.posts.add');
     }
+
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
 
     public function store(Request $request)
     {
@@ -51,18 +66,30 @@ class PostController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+
     public function show($id, Request $request)
     {
-        $post = Posts::find($id);
+        $post = Posts::findOrFail($id);
         return view('backend.posts.edit', compact('post'));
     }
+
+    /**
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
 
     public function edit($id, Request $request)
     {
         try {
             DB::beginTransaction();
 
-            $post = Posts::find($id);
+            $post = Posts::findOrFail($id);
             $post->title = $request->title;
             $post->content = $request->post_content;
             $post->category_id = $request->category_id;
@@ -74,15 +101,21 @@ class PostController extends Controller
             DB::commit();
             return redirect()->to('admin/post')->with('sucess', 'Sửa thành công');
 
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             dd($e->getMessage());
         }
     }
 
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
     public function destroy($id)
     {
-        $post = Posts::find($id);
+        $post = Posts::findOrFail($id);
 
         if ($post) {
             $post->delete();

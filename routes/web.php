@@ -11,8 +11,6 @@
 |
 */
 
-use function foo\func;
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -22,9 +20,9 @@ Auth::routes();
 Route::get('logout', ['uses' => 'Auth\LoginController@logout']);
 
 Route::group(['namespace' => 'frontEnd'], function (){
-    Route::get('/', ['uses' => 'IndexController@index' ]);
-    Route::get('/category', ['uses' => 'IndexController@category' ]);
-    Route::get('/post', ['uses' => 'IndexController@post' ]);
+    Route::get('/', ['uses' => 'HomeController@index' ])->name('front-end.home');
+    Route::get('/category/{id}', ['uses' => 'CategoryController@index' ])->name('front-end.category');
+    Route::get('/post/{id}', ['uses' => 'PostController@index' ])->name('front-end.post');
 });
 
 Route::group(['namespace' => 'backend', 'prefix' => 'admin', 'middleware' => 'auth'], function() {

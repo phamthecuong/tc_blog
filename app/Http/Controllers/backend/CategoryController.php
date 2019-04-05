@@ -9,11 +9,21 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+
     public function index()
     {
         $category = Category::with('posts')->get();
         return view('backend.category.index', compact('category'));
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
 
     public function store(Request $request)
     {
@@ -26,18 +36,29 @@ class CategoryController extends Controller
             $category->save();
 
             DB::commit();
+
             session()->flash('error', 'Thêm mới thành công');
             return redirect()->to('/admin/category');
+
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e->getMessage());
         }
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+
     public function getStore()
     {
         return view('backend.category.add');
     }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
 
     public function show($id)
     {
@@ -45,19 +66,27 @@ class CategoryController extends Controller
         return view('backend.category.edit', compact('category'));
     }
 
+
+    /**
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function edit($id, Request $request)
     {
         try {
             DB::beginTransaction();
 
-            $category = Category::find($id);
+            $category = Category::findOrFail($id);
             $category->name = $request->name;
             $category->weight = $request->weight;
             $category->save();
 
             DB::commit();
+
             session()->flash('sucess', 'sửa thành công');
             return redirect()->to('/admin/category');
+
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e->getMessage());

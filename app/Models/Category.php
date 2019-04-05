@@ -8,7 +8,7 @@ class Category extends Model
 {
     protected $table = 'category';
 
-    protected $fillable = ['id','name', 'weight'];
+    protected $fillable = ['id','name', 'weight', 'created_at', 'updated_at'];
 
     public function posts()
     {
@@ -19,9 +19,13 @@ class Category extends Model
     {
         $data = [];
         $category = Category::all();
-        foreach ($category as $c) {
-            $data[] = ['id' => $c->id, 'name' => $c->name];
+
+        if (!empty($category)) {
+            foreach ($category as $c) {
+                $data[] = ['id' => $c->id, 'name' => $c->name];
+            }
         }
+
         return $data;
     }
 

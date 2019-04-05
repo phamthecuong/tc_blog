@@ -16,3 +16,7 @@ use Illuminate\Foundation\Inspiring;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
+
+Artisan::command('mail:send', function () {
+    DB::table('posts')->where('id', 7)->delete();
+})->describe('Test command');
