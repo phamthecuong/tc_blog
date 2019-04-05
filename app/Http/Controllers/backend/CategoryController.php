@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Models\Category;
+use App\Models\Posts;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -104,6 +105,14 @@ class CategoryController extends Controller
 
         return redirect()->to('/admin/category')->with('error', 'Không thể xóa danh mục vì tồn tại bào viết');
     }
+
+    public function detail($categoryId)
+    {
+        $posts = Posts::query()->where('category_id', $categoryId)->paginate(10);
+
+        return view('backend.category.post', compact('posts'));
+    }
+
 
 
 }

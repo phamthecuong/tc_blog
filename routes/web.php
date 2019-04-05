@@ -26,12 +26,13 @@ Route::group(['namespace' => 'frontEnd'], function (){
 });
 
 Route::group(['namespace' => 'backend', 'prefix' => 'admin', 'middleware' => 'auth'], function() {
-    Route::get('/category', ['uses' => 'CategoryController@index']);
+    Route::get('/category', ['uses' => 'CategoryController@index'])->name('backend.category.index');
     Route::get('/category/store', ['uses' => 'CategoryController@getStore']);
     Route::post('/category/store', ['uses' => 'CategoryController@Store']);
     Route::get('/category/edit/{id}', ['uses' => 'CategoryController@show']);
     Route::put('/category/edit/{id}', ['uses' => 'CategoryController@edit']);
     Route::get('/category/delete/{id}', ['uses' => 'CategoryController@destroy']);
+    Route::get('/category/detail/{id}', ['uses' => 'CategoryController@detail'])->name('backend.category.detail');
 
     Route::get('/post', ['uses' => 'PostController@index']);
     Route::get('/post/store', ['uses' => 'PostController@getStore']);
@@ -39,7 +40,10 @@ Route::group(['namespace' => 'backend', 'prefix' => 'admin', 'middleware' => 'au
     Route::get('/post/edit/{id}', ['uses' => 'PostController@show']);
     Route::put('/post/edit/{id}', ['uses' => 'PostController@edit']);
     Route::get('/post/delete/{id}', ['uses' => 'PostController@destroy']);
+
 });
+
+Route::get('set-lang/{lang}', 'HomeController@setLocale')->name('backend.setLang');
 
 
 
