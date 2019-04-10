@@ -13,10 +13,13 @@ class CategoryController extends Controller
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
 
     public function index()
     {
+        $this->authorize('View_category');
+
         $category = Category::with('posts')->get();
         return view('backend.category.index', compact('category'));
     }
@@ -24,10 +27,13 @@ class CategoryController extends Controller
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
 
     public function store(Request $request)
     {
+        $this->authorize('create_caetgory');
+
         try {
             DB::beginTransaction();
 
@@ -49,10 +55,12 @@ class CategoryController extends Controller
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
 
     public function getStore()
     {
+        $this->authorize('create_category');
         return view('backend.category.add');
     }
 
@@ -72,9 +80,13 @@ class CategoryController extends Controller
      * @param $id
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
+
     public function edit($id, Request $request)
     {
+        $this->authorize('edit_category');
+
         try {
             DB::beginTransaction();
 
@@ -94,8 +106,16 @@ class CategoryController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+
     public function destroy($id)
     {
+        $this->authorize('delete_category');
+
         $category = Category::with('posts')->find($id);
 
         if (count($category->posts) == 0) {
@@ -105,6 +125,11 @@ class CategoryController extends Controller
 
         return redirect()->to('/admin/category')->with('error', 'Không thể xóa danh mục vì tồn tại bào viết');
     }
+
+    /**
+     * @param $categoryId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
 
     public function detail($categoryId)
     {

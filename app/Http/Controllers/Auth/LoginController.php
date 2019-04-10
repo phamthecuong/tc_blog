@@ -42,5 +42,25 @@ class LoginController extends Controller
     {
         Auth::logout();
         return redirect()->to('login');
+
+        // Get the session key for this user
+   //     $sessionKey = $this->guard()->getName();
+       // return $sessionKey;
+
+        // Logout current user by guard
+       // $this->guard()->logout();
+
+        // Delete single session key (just for this user)
+//        session()->forget($sessionKey);
+
+        // After logout, redirect to login screen again
+     //   return redirect()->route('admin.login');
+
+
+    }
+
+    public function checkLogin()
+    {
+
     }
 }

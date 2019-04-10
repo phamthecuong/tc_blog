@@ -1,0 +1,1 @@
+<?phpinterface categoryInterface{    public function find();    public function store();    public function update();    public function delete();}

@@ -20,6 +20,7 @@ class CreatePostsTable extends Migration
             $table->integer('category_id');
             $table->integer('created_by');
             $table->integer('view')->default(0);
+            $table->softDeletes();
             $table->string('tag', '150')->nullable();
             $table->timestamps();
         });

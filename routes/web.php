@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,6 +16,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('clear_session', 'Auth\LoginController@logout');
+
 Auth::routes();
 
 Route::get('logout', ['uses' => 'Auth\LoginController@logout']);
@@ -25,7 +28,7 @@ Route::group(['namespace' => 'frontEnd'], function (){
     Route::get('/post/{id}', ['uses' => 'PostController@index' ])->name('front-end.post');
 });
 
-Route::group(['namespace' => 'backend', 'prefix' => 'admin', 'middleware' => 'auth'], function() {
+Route::group(['namespace' => 'backend', 'prefix' => 'admin', 'middleware' => ['auth', 'checkLogin']], function() {
     Route::get('/category', ['uses' => 'CategoryController@index'])->name('backend.category.index');
     Route::get('/category/store', ['uses' => 'CategoryController@getStore']);
     Route::post('/category/store', ['uses' => 'CategoryController@Store']);
