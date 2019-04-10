@@ -4,6 +4,7 @@ namespace App\Http\Controllers\frontEnd;
 
 use App\Models\Posts;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -12,9 +13,19 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
 
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Posts::query()->limit(10)
+        if ($request->ajax()) {
+
+            $posts = Posts::query()
+                ->orderBy('created_at', 'desc')
+                ->paginate(3,['*'],'page',$request->page);
+
+
+            return response()->json($posts->items());
+        }
+
+        $posts = Posts::query()->limit(6)
             ->orderBy('created_at', 'desc')
             ->get();
 

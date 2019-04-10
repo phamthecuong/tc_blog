@@ -21,9 +21,9 @@ Copyright 2019 by thecuong52
                     <div class="footer-widget">
                         <h3 class="footer-title">Theo dõi</h3>
                         <ul class="footer-links">
-                            <li><a href="https://colorlib.com/preview/theme/webmag/about.html">About Us</a></li>
-                            <li><a href="https://colorlib.com/preview/theme/webmag/index.html#">Join Us</a></li>
-                            <li><a href="https://colorlib.com/preview/theme/webmag/contact.html">Contacts</a></li>
+                            <li><a href="https://colorlib.com/preview/theme/webmag/about.html">Giới thiệu</a></li>
+                            <li><a href="https://colorlib.com/preview/theme/webmag/index.html#">Tham gia</a></li>
+                            <li><a href="https://colorlib.com/preview/theme/webmag/contact.html">Liên lạc</a></li>
                         </ul>
                     </div>
                 </div>
@@ -31,10 +31,12 @@ Copyright 2019 by thecuong52
                     <div class="footer-widget">
                         <h3 class="footer-title">Danh mục</h3>
                         <ul class="footer-links">
-                            <li><a href="https://colorlib.com/preview/theme/webmag/category.html">Web Design</a></li>
-                            <li><a href="https://colorlib.com/preview/theme/webmag/category.html">JavaScript</a></li>
-                            <li><a href="https://colorlib.com/preview/theme/webmag/category.html">Css</a></li>
-                            <li><a href="https://colorlib.com/preview/theme/webmag/category.html">Jquery</a></li>
+                            @foreach($category as $c)
+                                <li><a href="https://colorlib.com/preview/theme/webmag/category.html">{{$c->name}}</a></li>
+                                {{--<li><a href="https://colorlib.com/preview/theme/webmag/category.html">JavaScript</a></li>--}}
+                                {{--<li><a href="https://colorlib.com/preview/theme/webmag/category.html">Css</a></li>--}}
+                                {{--<li><a href="https://colorlib.com/preview/theme/webmag/category.html">Jquery</a></li>--}}
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -45,7 +47,7 @@ Copyright 2019 by thecuong52
                 <h3 class="footer-title">Nhận thông báo</h3>
                 <div class="footer-newsletter">
                     <form>
-                        <input class="input" type="email" name="newsletter" placeholder="Enter your email">
+                        <input class="input" type="email" name="newsletter" placeholder="Nhập email">
                         <button class="newsletter-btn"><i class="fa fa-paper-plane"></i></button>
                     </form>
                 </div>

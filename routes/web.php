@@ -26,6 +26,8 @@ Route::group(['namespace' => 'frontEnd'], function (){
     Route::get('/', ['uses' => 'HomeController@index' ])->name('front-end.home');
     Route::get('/category/{id}', ['uses' => 'CategoryController@index' ])->name('front-end.category');
     Route::get('/post/{id}', ['uses' => 'PostController@index' ])->name('front-end.post');
+    Route::get('/slider', ['uses' => 'PostController@slider' ])->name('front-end.slider');
+    Route::get('get-post', 'HomeController@index')->name('ajax.load_post');
 });
 
 Route::group(['namespace' => 'backend', 'prefix' => 'admin', 'middleware' => ['auth', 'checkLogin']], function() {
@@ -43,6 +45,8 @@ Route::group(['namespace' => 'backend', 'prefix' => 'admin', 'middleware' => ['a
     Route::get('/post/edit/{id}', ['uses' => 'PostController@show']);
     Route::put('/post/edit/{id}', ['uses' => 'PostController@edit']);
     Route::get('/post/delete/{id}', ['uses' => 'PostController@destroy']);
+
+
 
 });
 
