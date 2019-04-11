@@ -17,15 +17,17 @@ class HomeController extends Controller
     {
         if ($request->ajax()) {
 
+            $limit = $request->limit + 1;
+
             $posts = Posts::query()
                 ->orderBy('created_at', 'desc')
-                ->paginate(3,['*'],'page',$request->page);
+                ->paginate($limit, ['*'],'page', $request->page);
 
 
             return response()->json($posts->items());
         }
 
-        $posts = Posts::query()->limit(6)
+        $posts = Posts::query()->limit(8)
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -34,7 +36,10 @@ class HomeController extends Controller
             ->orderBy('view', 'desc')
             ->get();
 
-        return view('frontEnd.home', compact('posts', 'posts_new'));
+        $category_post['tech'] = Posts::query()->where('category_id', 2)->limit(12)->get()->toArray();
+        $category_post['dev'] = Posts::query()->where('category_id', 3)->limit(12)->get()->toArray();
+        $category_post['resources'] = Posts::query()->where('category_id', 4)->limit(12)->get()->toArray();
+        return view('frontEnd.home', compact('posts', 'posts_new', 'category_post'));
     }
 
 }
